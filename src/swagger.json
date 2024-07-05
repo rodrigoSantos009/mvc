@@ -1,0 +1,158 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "API de uma aplicação de tarefas",
+    "description": "A aplicação é um repositório para gerenciar tarefas.",
+    "termsOfService": "http://localhost:3000/terms",
+    "contact": {
+      "email": "009rodrigo009@gmail.com"
+    }
+  },
+  "version": "1.0.0",
+  "servers": [
+    {
+      "url": "http://localhost:3000",
+      "description": "API desenvolvimento"
+    }
+  ],
+  "paths": {
+    "/tasks": {
+      "post": {
+        "summary": "Cadastro de tarefa",
+        "description": "Rota responsável por cadastrar nova tarefa",
+        "tags": ["Task"],
+                "security": [
+                  {
+                    "bearerAuth": []
+                  }
+                ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Task"
+              },
+              "examples": {
+                "task": {
+                  "value": {
+                    "title": "Estudar"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Task"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Listar tarefas",
+        "description": "Rota responsável por listar tarefas",
+        "tags": [
+          "Task"
+        ],
+        "parameters": [],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          },
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/tasks/{id}": {
+      "get": {
+        "summary": "Listar tarefa pelo ID",
+        "description": "Listar tarefa pelo ID",
+        "tags": [
+          "Task"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "tarefa pelo ID",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Task"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Atualizar tarefa pelo seu ID",
+        "description": "Atualizar tarefa pelo seu ID",
+        "tags": [
+          "Task"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID da tarefa",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Task"
+              },
+              "examples": {
+                "task": {
+                  "value": {
+                    "title": "Notion"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Task": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
